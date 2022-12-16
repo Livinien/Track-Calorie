@@ -1,7 +1,11 @@
 @import 'variables.scss';
-@import 'components/header.scss';
 @import 'components/dataUser.scss';
+@import 'components/header.scss';
 
+
+body {
+    background: rgb(255, 252, 252);
+}
 
 .containerApp {
     display: flex;
@@ -29,23 +33,34 @@ main {
     }
 }
 
-.custom-shape-divider-bottom-1671192694 {
+.custom-shape-divider-bottom-1671199301 {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     overflow: hidden;
     line-height: 0;
-    transform: rotate(180deg);
 }
 
-.custom-shape-divider-bottom-1671192694 svg {
+.custom-shape-divider-bottom-1671199301 svg {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
-    height: 100px;
+    height: 152px;
 }
 
-.custom-shape-divider-bottom-1671192694 .shape-fill {
-    fill: #FFFFFF;
+.custom-shape-divider-bottom-1671199301 .shape-fill {
+    fill: rgb(255, 252, 252);
+}
+
+.food {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin-bottom: 10px;
+    padding: 2rem;
+
+    .kgFood {
+        color: rgb(114, 114, 114);
+    }
 }
