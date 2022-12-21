@@ -117,8 +117,39 @@ include_once('includes/header.php');
 
 <footer class="py-5">
     <div class="text-center">
-        <button type="button" class="btn btn-primary">+</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">+</button>
     </div>
+
+    <div class="modal fade mt-5" id="modal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-meal" aria-labelleby="modal meal">Add a meal</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center " aria-describedby="content">
+
+                    <form>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Name of meal</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Number of Calories</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+
+
+                        <button type="button" class="btn btn-danger mt-4 me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success mt-4">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </footer>
 </div>
 

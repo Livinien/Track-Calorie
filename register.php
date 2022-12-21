@@ -64,17 +64,18 @@
 
                     <div class="mt-4">
                         <label for="password" class="form-label">Confirm your Password</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="confirm-password">
                     </div>
 
-                    <div class="mt-4 form-check">
+                    <!-- <div class="mt-4 form-check">
                         <input type="checkbox" class="form-check-input" id="checkbox">
                         <label class="form-check-label" for="checkbox">Check me out</label>
-                    </div>
+                    </div> -->
 
                     <button type="submit" class="btn btn-primary mt-4">Submit</button>
 
                 </form>
+                <br>
                 <a href="login.php">Login</a>
             </div>
         </div>
