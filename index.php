@@ -30,6 +30,15 @@ $page=[
 
 include_once('includes/header.php');
 
+
+@include 'config.php';
+
+if(!empty($_SESSION["id"])) {
+    $id = $_SESSION["id"];
+    $result = mysqli_query($conn, "SELECT * FROM user_id WHERE id = $id");
+    $row = mysqli_fetch_assoc($result);
+}
+
 ?>
 
 <div class="containerApp">
@@ -37,11 +46,18 @@ include_once('includes/header.php');
         <div class="container">
             <div class="row align-items-center">
                 <div class="col">
-                    <h1>Track Calories</h1>
+                    <a href="index.php">
+                        <h1>Track Calories</h1>
+                    </a>
                 </div>
 
-                <div class="col-auto">
-                    <div class="profile"><i class="bi bi-person"></i><?php echo $user['name']; ?></div>
+                <div class="d-flex col-auto link">
+                    <div class="profile px-5">
+                        <i class="bi bi-person"></i><a href="profile.php"><?php echo $user['name']; ?></a>
+                    </div>
+                    <div class="logout">
+                        <i class="bi bi-box-arrow-right"></i><a href="logout.php"> Logout</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,89 +84,91 @@ include_once('includes/header.php');
                         class="shape-fill"></path>
                 </svg>
             </div>
-</div>
-</section>
 
-<section class="date">
-    <div class="text-center py-3"><?php $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+        </section>
+
+
+        <section class="date">
+            <div class="text-center py-3"><?php $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
             echo $formatter->format(time()); ?></div>
-</section>
+        </section>
 
 
-<section class="list">
-    <div class="container">
-        <div class="row">
-            <div class="col">
+        <section class="list">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
 
-                <div class="food">
-                    <div class="titleFood">
-                        <h3>Big Mac</h3>
-                    </div>
-                    <div class="kgFood">
-                        <p>504 kcal</p>
+                        <div class="food">
+                            <div class="titleFood">
+                                <h3>Big Mac</h3>
+                            </div>
+                            <div class="kgFood">
+                                <p>504 kcal</p>
+                            </div>
+                        </div>
+
+                        <div class="food">
+                            <div class="titleFood">
+                                <h3>Hamburger</h3>
+                            </div>
+                            <div class="kgFood">
+                                <p>400 kcal</p>
+                            </div>
+                        </div>
+
+                        <div class="food">
+                            <div class="titleFood">
+                                <h3>Sunday au Chocolat</h3>
+                            </div>
+                            <div class="kgFood">
+                                <p>250 kcal</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="food">
-                    <div class="titleFood">
-                        <h3>Hamburger</h3>
-                    </div>
-                    <div class="kgFood">
-                        <p>400 kcal</p>
-                    </div>
-                </div>
+        </section>
+    </main>
 
-                <div class="food">
-                    <div class="titleFood">
-                        <h3>Sunday au Chocolat</h3>
+    <footer class="py-5">
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">+</button>
+        </div>
+
+        <div class="modal fade mt-5" id="modal1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-meal" aria-labelleby="modal meal">Add a meal</h5>
+                        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="kgFood">
-                        <p>250 kcal</p>
+                    <div class="modal-body text-center " aria-describedby="content">
+
+                        <form>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Name of meal</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Number of Calories</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+
+
+                            <button type="button" class="btn btn-danger mt-4 me-2"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-success mt-4">Add</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</section>
-</main>
-
-<footer class="py-5">
-    <div class="text-center">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">+</button>
-    </div>
-
-    <div class="modal fade mt-5" id="modal1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-meal" aria-labelleby="modal meal">Add a meal</h5>
-                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center " aria-describedby="content">
-
-                    <form>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Name of meal</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Number of Calories</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
-                        </div>
-
-
-                        <button type="button" class="btn btn-danger mt-4 me-2" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success mt-4">Add</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</footer>
+    </footer>
 </div>
 
 <?php include_once('includes/footer.php'); ?>

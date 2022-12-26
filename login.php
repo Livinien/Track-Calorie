@@ -6,6 +6,34 @@
 
 
     include_once('includes/header.php');
+
+
+    
+    @include 'config.php';
+
+    if(isset($_POST['submit'])) {
+        
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $result = mysqli_query($conn, "SELECT * FROM user_id WHERE email = '$email'");
+        $row = mysqli_fetch_assoc($result);
+
+        if(mysqli_num_rows($result) > 0) {
+            if($password == $row["password"]) {
+                $_SESSION["login"] = true;
+                $_SESSION["id"] = $row["id"];
+                header("Location: index.php");
+            }
+
+            else {
+                echo "<script> alert('Wrong Password'); </script>";
+            } 
+        }
+        
+        else {
+            echo "<script> alert('User not registred'); </script>";
+        }
+    };
 ?>
 
 <header>
@@ -22,26 +50,22 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <form>
+                <form action="" method="POST">
                     <div class="mt-5">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
                         <div id="emailHelp" class="form-text"></div>
                     </div>
 
                     <div class="mt-5">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password">
-                    </div>
-                    <div class="mt-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="checkbox">
-                        <label class="form-check-label" for="checkbox">Check me out</label>
+                        <input type="password" name="password" class="form-control" id="password">
                     </div>
 
-                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                    <button type="submit" name="submit" class="btn btn-primary mt-4 mb-4">Submit</button>
 
                 </form>
-                <a href="register.php">Register</a>
+                <p>Don't have an account ? <a href="register.php">Register</a></p>
             </div>
         </div>
     </div>
