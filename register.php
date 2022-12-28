@@ -30,7 +30,7 @@
 
     if(!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $firstname)) {
         
-        header("location: login.php?error=invalidfirstname&email");
+        header("location: register.php?error=invalidfirstname&email");
         exit();
 
     } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -39,19 +39,19 @@
         exit();
 
     } else if(!preg_match("/^[a-zA-Z0-9]*$/", $firstname)) {
-        header("location: login.php?error=invalidfirstname");
+        header("location: register.php?error=invalidfirstname");
         exit();
 
     } else if(!preg_match("/[0-9]/", $size)) {
-        header("location: login.php?error=invalidsize");
+        header("location: register.php?error=invalidsize");
         exit();
         
     } else if(!preg_match("/[0-9]/", $weight)) {
-        header("location: login.php?error=invalidweight");
+        header("location: register.php?error=invalidweight");
         exit();
         
     } else if($password!=$confirm_password) {
-        header("location: login.php?error=passworddontmatch");
+        header("location: register.php?error=passworddontmatch");
         exit();
         
     } else {
@@ -59,14 +59,14 @@
         $res = mysqli_query($conn, $sql);
 
         if(!$res) {
-            header("location: login.php?error=sqlerror");
+            header("location: register.php?error=sqlerror");
             exit();
         
         } else {
             $resultCheck = mysqli_num_rows($res);
             
             if($resultCheck > 0) {
-                header("location: login.php?error=FIRSTNAMETAKEN");
+                header("location: register.php?error=FIRSTNAMETAKEN");
                 exit();
                 
             } else {
@@ -76,11 +76,11 @@
                 $res = mysqli_query($conn, $sql);
 
                 if(!$res) {
-                    header("location: login.php?error=sqlerror");
+                    header("location: register.php?=sqlerror");
                     exit();
 
                 } else {
-                    header("location: login.php?error=SUCCESS");
+                    header("location: login.php?register=SUCCESS");
                     exit();
                 }
                 

@@ -11,6 +11,48 @@
     
     @include 'config.php';
 
+
+    if(isset($_POST["submit"])) {
+        
+        require 'config.php';
+
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+
+        $sql = "SELECT * FROM track_calorie WHERE email='".$email."';";
+        $res = mysqli_query($conn, $sql);
+
+        if(!$res) {
+            header("location: login.php?error=sqlerror");
+            exit();
+
+        } else {
+            if($row = mysqli_fetch_assoc($res)) {
+                $password = password_verify($password, $row["password"]);
+
+                if($password==false) {
+                    header("location: login.php?error=wrongpassword");
+                    exit();
+                    
+                } else if($password==true) {
+                    session_start();
+                    $_SESSION["userId"]=$row["id"];
+                    $_SESSION["firstname"]=$row["firstname"];
+
+                    header("location: index.php?login=SUCCESS");
+                    exit();
+                } 
+                
+            } else {
+                header("location: login.php?error=doesntwork");
+                exit();
+            }
+        }
+
+        mysqli_close($conn);
+    }
+
+    
     
 ?>
 
@@ -28,7 +70,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <form action="" method="POST">
+                <form action="login.php" method="POST">
                     <div class="mt-5">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
