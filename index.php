@@ -33,11 +33,9 @@ include_once('includes/header.php');
 
 @include 'config.php';
 
-if(!empty($_SESSION["id"])) {
-    $id = $_SESSION["id"];
-    $result = mysqli_query($conn, "SELECT * FROM user_id WHERE id = $id");
-    $row = mysqli_fetch_assoc($result);
-}
+
+
+
 
 ?>
 

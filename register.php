@@ -11,38 +11,86 @@
 
     @include 'config.php';
 
-    if(!empty($_SESSION["id"])) {
-        header("Location: index.php");
-    }
     
+
     if(isset($_POST['submit'])) {
+
+    require 'config.php';
+
+
+    $firstname = $_POST["firstname"];
+    $age = $_POST["age"];
+    $gender = $_POST["gender"];
+    $size = $_POST["size"];
+    $weight = $_POST["weight"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $confirm_password = $_POST["confirm_password"];
+    
+
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $firstname)) {
         
-        $firstname = $_POST['firstname'];
-        $age = $_POST['age'];
-        $gender = $_POST['gender'];
-        $size = $_POST['size'];
-        $weight = $_POST['weight'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $confirm_password = $_POST['confirm_password'];
-        $duplicate = mysqli_query($conn, "SELECT * FROM user_id WHERE firstname = '$firstname' OR email = '$email'");
+        header("location: login.php?error=invalidfirstname&email");
+        exit();
 
-        if(mysqli_num_rows($duplicate) > 0) {
-            echo "<script> alert('Fistname or Email has already taken'); </script>";
+    } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        
+        header("location: login.php?error=invalidemail");
+        exit();
 
+    } else if(!preg_match("/^[a-zA-Z0-9]*$/", $firstname)) {
+        header("location: login.php?error=invalidfirstname");
+        exit();
+
+    } else if(!preg_match("/[0-9]/", $size)) {
+        header("location: login.php?error=invalidsize");
+        exit();
+        
+    } else if(!preg_match("/[0-9]/", $weight)) {
+        header("location: login.php?error=invalidweight");
+        exit();
+        
+    } else if($password!=$confirm_password) {
+        header("location: login.php?error=passworddontmatch");
+        exit();
+        
+    } else {
+        $sql = "SELECT firstname FROM track_calorie WHERE firstname='".$firstname."';";
+        $res = mysqli_query($conn, $sql);
+
+        if(!$res) {
+            header("location: login.php?error=sqlerror");
+            exit();
+        
         } else {
-            if($password == $confirm_password) {
-                $query = "INSERT INTO user_id VALUES('', '$firstname', '$age', '$gender', '$size', '$weight', '$email', '$password')";
-                header("Location: index.php");
-                mysqli_query($conn, $query);
+            $resultCheck = mysqli_num_rows($res);
+            
+            if($resultCheck > 0) {
+                header("location: login.php?error=FIRSTNAMETAKEN");
+                exit();
                 
-                echo "<script> alert('Registration Successful'); </script>";
-
             } else {
-                echo "<script> alert('Password does not match'); </script>";
+                $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "INSERT INTO track_calorie(firstname, age, gender, size, weight, email, password) VALUES ('".$firstname."','".$age."','".$gender."','".$size."','".$weight."','".$email."','".$hashPassword."');";
+                
+                $res = mysqli_query($conn, $sql);
+
+                if(!$res) {
+                    header("location: login.php?error=sqlerror");
+                    exit();
+
+                } else {
+                    header("location: login.php?error=SUCCESS");
+                    exit();
+                }
+                
             }
         }
-    };
+    }
+
+    mysql_close($conn);
+
+   } 
 
 ?>
 
@@ -51,14 +99,6 @@
         <div class="row">
             <div class="col"></div>
             <h1>Register Page</h1>
-
-            <?php 
-            if(isset($error)) {
-                foreach($error as $error) {
-                    echo '<span class="error-msg>'.$error.'</span>';
-                };
-            };
-            ?>
         </div>
     </div>
 </header>
@@ -68,7 +108,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <form action="" method="POST">
+                <form action="register.php" method="POST">
 
                     <div class="mt-5">
                         <label for="firstname" class="form-label">Firstname</label>
