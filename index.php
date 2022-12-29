@@ -1,4 +1,5 @@
-<?php
+<?php session_start();
+
 
 // Connexion à la BDD 
 
@@ -33,10 +34,6 @@ include_once('includes/header.php');
 
 @include 'config.php';
 
-
-
-
-
 ?>
 
 <div class="containerApp">
@@ -50,16 +47,29 @@ include_once('includes/header.php');
                 </div>
 
                 <div class="d-flex col-auto link">
-                    <div class="profile px-5">
-                        <i class="bi bi-person"></i><a href="profile.php"><?php echo $user['name']; ?></a>
+                    <div class="profile mt-2 px-5 fw-bold">
+                        Welcome <a href="profile.php"><?php echo $_SESSION["firstname"]; ?></a>
                     </div>
+
                     <div class="logout">
-                        <i class="bi bi-box-arrow-right"></i><a href="logout.php"> Logout</a>
+
+                        <?php 
+                        
+                            if(isset($_SESSION["userId"])) {
+
+                                echo '<form action="logout.php" method="POST">
+                                            <button type="submit" name="submit" class="btn btn-warning fw-bold">Logout</button>
+                                      </form>';
+                                
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </header>
+
+
 
     <main>
         <section class="dataUser">

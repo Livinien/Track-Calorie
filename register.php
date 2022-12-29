@@ -28,18 +28,13 @@
     $confirm_password = $_POST["confirm_password"];
     
 
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $firstname)) {
+    if(!preg_match("/^[a-zA-Z0-9]*$/", $firstname)) {
         
-        header("location: register.php?error=invalidfirstname&email");
-        exit();
-
-    } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        
-        header("location: login.php?error=invalidemail");
-        exit();
-
-    } else if(!preg_match("/^[a-zA-Z0-9]*$/", $firstname)) {
         header("location: register.php?error=invalidfirstname");
+        exit();
+
+    } else if(!preg_match("/[0-9]/", $age)) {
+        header("location: register.php?error=invalidage");
         exit();
 
     } else if(!preg_match("/[0-9]/", $size)) {
@@ -50,6 +45,11 @@
         header("location: register.php?error=invalidweight");
         exit();
         
+    } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        
+        header("location: login.php?error=invalidemail");
+        exit();
+    
     } else if($password!=$confirm_password) {
         header("location: register.php?error=passworddontmatch");
         exit();
@@ -83,7 +83,6 @@
                     header("location: login.php?register=SUCCESS");
                     exit();
                 }
-                
             }
         }
     }
@@ -98,10 +97,41 @@
     <div class="container">
         <div class="row">
             <div class="col"></div>
-            <h1>Register Page</h1>
+            <h1>Register</h1>
         </div>
     </div>
 </header>
+
+<div class="mt-4 text-light bg-danger text-center d-grid gap-2 col-6 mx-auto rounded-1 fw-bold">
+
+    <?php 
+            
+        if(isset($_GET['error'])) {
+            if($_GET['error']=="invalidfirstname") {
+                echo '<p class="msg-error mt-3">You did not enter a firstname</p>';
+                
+            } else if($_GET['error']=="invalidage") {
+                echo '<p class="msg-error mt-3">You did not enter a age</p>';
+                
+            } else if($_GET['error']=="invalidsize") {
+                echo '<p class="msg-error mt-3">You did not enter a size</p>';
+                
+            } else if($_GET['error']=="invalidweight") {
+                echo '<p class="msg-error mt-3">You did not enter a weight</p>';
+                
+            } else if($_GET['error']=="invalidemail") {
+                echo '<p class="msg-error mt-3">You did not enter a email</p>';
+                
+            } else if($_GET['error']=="passworddontmatch") {
+                echo '<p class="msg-error mt-3">Your password is not the same</p>';
+                
+            } else if($_GET['error']=="FIRSTNAMETAKEN") {
+                echo '<p class="msg-error mt-3">Your name already exists</p>';
+            }
+        }        
+    ?>
+
+</div>
 
 
 <main>
@@ -110,7 +140,7 @@
             <div class="col">
                 <form action="register.php" method="POST">
 
-                    <div class="mt-5">
+                    <div class="mt-3">
                         <label for="firstname" class="form-label">Firstname</label>
                         <input type="text" name="firstname" class="form-control" id="firstname">
                     </div>

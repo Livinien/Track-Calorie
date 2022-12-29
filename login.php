@@ -60,10 +60,28 @@
     <div class="container">
         <div class="row">
             <div class="col"></div>
-            <h1>Login Page</h1>
+            <h1>Login</h1>
         </div>
     </div>
 </header>
+
+
+<div class="mt-4 text-light bg-danger text-center d-grid gap-2 col-6 mx-auto rounded-1 fw-bold">
+
+    <?php 
+            
+        if(isset($_GET['error'])) {
+            if($_GET['error']=="doesntwork") {
+                echo '<p class="msg-error mt-3">Your email address does not exist</p>';
+                
+            } else if($_GET['error']=="wrongpassword") {
+                echo '<p class="msg-error mt-3">Your password is invalid</p>';
+                
+            }
+        }        
+    ?>
+
+</div>
 
 
 <main>
