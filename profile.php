@@ -47,6 +47,10 @@
                 </div>
 
                 <div class="d-flex col-auto link">
+                    <div class="profile px-5 fw-bold">
+                        <h3><a href="index.php">Home</a></h3>
+                    </div>
+
                     <div class="logout">
 
                         <?php 
@@ -73,7 +77,8 @@
                 <div class="col">
                     <form action="profile.php" method="POST">
 
-                        <!-- <img src="" class="rounded mx-auto d-block mt-5" alt=""> -->
+                        <img src="./pictures/admin.jpg" class="rounded mx-auto d-block text-center"
+                            alt="picture profile">
 
                         <div class="mt-5">
                             <label for="firstname" class="form-label">Firstname</label>
@@ -105,10 +110,35 @@
                             <input type="password" name="password" class="form-control">
                         </div>
 
-                        <button type="button" class="btn btn-success mt-4" name="save_account">Save</button>
+                        <button type="button" class="btn btn-success mt-4 mb-5" name="save_account">Save</button>
 
-                        <button type="submit" class="btn btn-danger mt-4 ms-5" name="delete_account">Delete
-                            Account</button>
+
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger mt-4 mb-5 ms-4" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Delete Account
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade mt-5 text-center" id="exampleModal" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4>Would you like to delete your account ?</h4>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-success"
+                                            name="delete_account">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </form>
                 </div>

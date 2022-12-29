@@ -47,8 +47,8 @@ include_once('includes/header.php');
                 </div>
 
                 <div class="d-flex col-auto link">
-                    <div class="profile mt-2 px-5 fw-bold">
-                        Welcome <a href="profile.php"><?php echo $_SESSION["firstname"]; ?></a>
+                    <div class="profile px-5 fw-bold">
+                        <h3>Welcome <a href="profile.php"><?php echo $_SESSION["firstname"]; ?></a></h3>
                     </div>
 
                     <div class="logout">
