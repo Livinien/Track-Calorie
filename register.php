@@ -19,6 +19,7 @@
 
 
     $firstname = $_POST["firstname"];
+    $lastname = $_POST["lastname"];
     $age = $_POST["age"];
     $gender = $_POST["gender"];
     $size = $_POST["size"];
@@ -33,10 +34,10 @@
         header("location: register.php?error=invalidfirstname");
         exit();
 
-    } else if(!preg_match("/[0-9]/", $age)) {
-        header("location: register.php?error=invalidage");
+    } else if(!preg_match("/^[a-zA-Z0-9]*$/", $lastname)) {
+        header("location: register.php?error=invalidlastname");
         exit();
-
+    
     } else if(!preg_match("/[0-9]/", $size)) {
         header("location: register.php?error=invalidsize");
         exit();
@@ -71,7 +72,7 @@
                 
             } else {
                 $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO track_calorie(firstname, age, gender, size, weight, email, password) VALUES ('".$firstname."','".$age."','".$gender."','".$size."','".$weight."','".$email."','".$hashPassword."');";
+                $sql = "INSERT INTO track_calorie(firstname, lastname, age, gender, size, weight, email, password) VALUES ('".$firstname."', '".$lastname."','".$age."','".$gender."','".$size."','".$weight."','".$email."','".$hashPassword."');";
                 
                 $res = mysqli_query($conn, $sql);
 
@@ -110,6 +111,9 @@
             if($_GET['error']=="invalidfirstname") {
                 echo '<p class="msg-error mt-3">You did not enter a firstname</p>';
                 
+            } else if($_GET['error']=="invalidlastname") {
+                echo '<p class="msg-error mt-3">You did not enter a lastname</p>';
+            
             } else if($_GET['error']=="invalidage") {
                 echo '<p class="msg-error mt-3">You did not enter a age</p>';
                 
@@ -143,6 +147,11 @@
                     <div class="mt-3">
                         <label for="firstname" class="form-label">Firstname</label>
                         <input type="text" name="firstname" class="form-control" id="firstname">
+                    </div>
+
+                    <div class="mt-3">
+                        <label for="lastname" class="form-label">Lastname</label>
+                        <input type="text" name="lastname" class="form-control" id="lastname">
                     </div>
 
                     <div class="mt-4">
